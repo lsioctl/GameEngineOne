@@ -1,20 +1,14 @@
 #include "Shader.h"
+#include <glm/gtc/type_ptr.hpp>
 
 using namespace std;
 
 Shader::Shader() :
     mShaderId{ 0 },
     mVertexShader{ 0 },
-    mFragmentShader{ 0 },
-    mUniformProjection{ 0 },
-    mUniformModel{ 0 },
-    mUniformView{ 0 },
-    mUniformAmbientIntensity{ 0 },
-    mUniformAmbientColor{ 0 },
-    mUniformDiffuseIntensity{ 0 },
-    mUniformLightPosition{ 0 },
-    mUniformCameraPosition{ 0 }
+    mFragmentShader{ 0 }
 {};
+
 
 string Shader::readFile(const char* fileName) {
     string content;
@@ -38,6 +32,7 @@ string Shader::readFile(const char* fileName) {
     return content;
 }
 
+
 bool Shader::isCompiled(GLuint shaderId, GLenum shaderType) {
     GLint status;
     // Query the compile status
@@ -53,6 +48,7 @@ bool Shader::isCompiled(GLuint shaderId, GLenum shaderType) {
 
     return true;
 }
+
 
 bool Shader::isLinkedProgram() {
     GLint status;
@@ -70,6 +66,7 @@ bool Shader::isLinkedProgram() {
     return true;
 }
 
+
 bool Shader::isValidProgram() {
     GLint status;
     // Query the validate status
@@ -86,18 +83,6 @@ bool Shader::isValidProgram() {
     return true;
 }
 
-void Shader::setUniforms() {
-    // get the id of the references we want to change
-    // TODO: not applicable to all shaders, so refactor it
-    mUniformModel = glGetUniformLocation(mShaderId, "model");
-    mUniformView = glGetUniformLocation(mShaderId, "view");
-    mUniformProjection = glGetUniformLocation(mShaderId, "projection");
-    mUniformAmbientIntensity = glGetUniformLocation(mShaderId, "directionalLight.ambientIntensity");
-    mUniformAmbientColor = glGetUniformLocation(mShaderId, "directionalLight.color");
-    mUniformDiffuseIntensity = glGetUniformLocation(mShaderId, "directionalLight.diffuseIntensity");
-    mUniformLightPosition = glGetUniformLocation(mShaderId, "directionalLight.position");
-    mUniformCameraPosition = glGetUniformLocation(mShaderId, "cameraPosition");
-}
 
 bool Shader::compile(const char* shaderFile, GLenum shaderType, GLuint& outShader) {
 
@@ -122,6 +107,7 @@ bool Shader::compile(const char* shaderFile, GLenum shaderType, GLuint& outShade
 
     return true;
 }
+
 
 bool Shader::create(const char* vertexFile, const char* fragmentFile) {
     // Compile vertex and fragment shaders
@@ -149,6 +135,20 @@ bool Shader::create(const char* vertexFile, const char* fragmentFile) {
 }
 
 
+void Shader::setMatrixUniform(const char* name, const glm::mat4& matrix) {
+    // Find the uniform by its name
+    GLuint location = glGetUniformLocation(mShaderId, name);
+
+    // Send the matrix data to the uniform
+    glUniformMatrix4fv(
+        location,                   // Uniform ID
+        1,                          // Number of matrices
+        GL_FALSE,                   // true for row vectors, false for column vectors
+        glm::value_ptr(matrix)      // pointer to matrix data
+    );
+}
+
+
 // TODO: some public functions needs other functions being called before
 // for instances properties to have meaningfull values
 // there should be a better design pattern (Builder, Factory, ...) somewhere
@@ -157,38 +157,6 @@ void Shader::setActive() {
     glUseProgram(mShaderId);
 }
 
-// TODO: not applicable for all shaders, refactor
-GLuint Shader::getModelLocation() {
-    return mUniformModel;
-}
-
-GLuint Shader::getViewLocation() {
-    return mUniformView;
-}
-
-GLuint Shader::getProjectionLocation() {
-    return mUniformProjection;
-}
-
-GLuint Shader::getUniformAmbientColorLocation() {
-    return mUniformAmbientColor;
-}
-
-GLuint Shader::getUniformAmbientIntensityLocation() {
-    return mUniformAmbientIntensity;
-}
-
-GLuint Shader::getUniformDiffuseIntensityLocation() {
-    return mUniformDiffuseIntensity;
-}
-
-GLuint Shader::getUniformLightPositionLocation() {
-    return mUniformLightPosition;
-}
-
-GLuint Shader::getUniformCameraPositionLocation() {
-    return mUniformCameraPosition;
-}
 
 void Shader::clear() {
     // tell the Graphic Card to release the shaders
@@ -202,6 +170,7 @@ void Shader::clear() {
         glDeleteShader(mFragmentShader);
     }
 }
+
 
 Shader::~Shader() {
     clear();
