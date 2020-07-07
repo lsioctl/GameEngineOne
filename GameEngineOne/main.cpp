@@ -1,13 +1,21 @@
 #include "GameWindow.h"
 #include <memory>
+#include "Pyramid.h"
+#include <iostream>
+
+using namespace std;
 
 GLdouble deltaTime{ 0.0 };
 GLdouble lastTime{ 0.0 };
 
 int main() {
 	auto mainWindow = make_unique<GameWindow>(800, 600);
-
 	mainWindow->create();
+
+	Pyramid pyramidModel = Pyramid();
+
+	cout << pyramidModel.getVerticesSize() << endl;
+	cout << pyramidModel.getIndicesSize() << endl;
 
 	// main loop
 	while (!mainWindow->shouldClose()) {
