@@ -29,24 +29,19 @@ void Mesh::create(GLfloat* vertices, unsigned int verticesSize, unsigned int* in
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]) * 8, 0);
     // slot 1 for u, v so for texture coordinates
     // offset for the first value is 3
-    //glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vertices[0]) * 8, (void*)(sizeof(vertices[0]) * 3));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vertices[0]) * 8, (void*)(sizeof(vertices[0]) * 3));
     // for normals
-    //glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]) * 8, 0);
-    //glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]) * 8, (void*)(sizeof(vertices[0]) * 5));
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]) * 8, (void*)(sizeof(vertices[0]) * 5));
     // enable vertices, texture and normal on VAO
     glEnableVertexAttribArray(0);
-    //glEnableVertexAttribArray(1);
-    //glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
 
 }
 
 void Mesh::render() {
     // TODO: render is done with active shaders and textures
    
-    // if we pass lines, it won't color the triangle
-    // we want to draw three points in the mVAO
-    //glDrawArrays(GL_TRIANGLES, 0, 3);
-
     // for some bug in Graphic Cards, we need it
     //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIBO);
 

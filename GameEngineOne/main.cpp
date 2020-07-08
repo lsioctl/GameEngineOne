@@ -51,11 +51,11 @@ int main() {
 		glm::mat4 worldTransform = glm::mat4(1.0f);
 
 		// firs translate
-		//worldTransform = glm::translate(worldTransform, glm::vec3(1.0f, 0.0f, -3.0f));
+		//worldTransform = glm::translate(worldTransform, glm::vec3(0.0f, 0.0f, -0.9f));
 		// then rotate
-		//model = glm::rotate(model, curAngle * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//worldTransform = glm::rotate(worldTransform, 2.0f, glm::vec3(1.0f, 1.0f, 0.0f));
 		// then scale
-		worldTransform = glm::scale(worldTransform, glm::vec3(0.4f, 0.4f, 0.4f));
+		worldTransform = glm::scale(worldTransform, glm::vec3(0.3f, 0.3f, 0.3f));
 
 		// set world transform in the shader
 		simpleShader.setMatrixUniform("uWorldTransform", worldTransform);

@@ -12,11 +12,10 @@ void main() {
     vec4 pos = vec4(inPosition, 1.0f);
 
     // calculate position in the clipping space
-    //gl_Position = uWorldTransform * pos;
-    gl_Position = pos;
+    gl_Position = uWorldTransform * pos;
+    //gl_Position = pos;
 
     // make the vertex color depending on the model's vertex position
     // last parameter is alpha (transparency)
-    vertexColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
-    //vertexColor = vec4(clamp(inPosition, 0.0f, 1.0f), 1.0f);
+    vertexColor = vec4(clamp(inPosition, 0.0f, 1.0f), 1.0f);
 }
