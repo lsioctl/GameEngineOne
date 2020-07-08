@@ -15,7 +15,7 @@ private:
 	GLuint mVAO;
 	GLuint mVBO;
 	GLuint mIBO;
-	unsigned int mindexCount;
+	unsigned int mIndexCount;
 };
 
 

@@ -53,13 +53,13 @@ bool Shader::isCompiled(GLuint shaderId, GLenum shaderType) {
 bool Shader::isLinkedProgram() {
     GLint status;
     // Query the Link status
-    glGetShaderiv(mShaderId, GL_LINK_STATUS, &status);
+    glGetProgramiv(mShaderId, GL_LINK_STATUS, &status);
 
     if (status != GL_TRUE) {
         char errorLog[1024];
         memset(errorLog, 0, 1024);
         glGetProgramInfoLog(mShaderId, 1023, nullptr, errorLog);
-        cout << "Error Linking programm: " << errorLog << endl;
+        cout << "Error Linking program: " << errorLog << endl;
         return false;
     }
 
@@ -70,13 +70,13 @@ bool Shader::isLinkedProgram() {
 bool Shader::isValidProgram() {
     GLint status;
     // Query the validate status
-    glGetShaderiv(mShaderId, GL_VALIDATE_STATUS, &status);
+    glGetProgramiv(mShaderId, GL_VALIDATE_STATUS, &status);
 
     if (status != GL_TRUE) {
         char errorLog[1024];
         memset(errorLog, 0, 1024);
         glGetProgramInfoLog(mShaderId, 1023, nullptr, errorLog);
-        cout << "Error Validating programm: " << errorLog << endl;
+        cout << "Error Validating program: " << errorLog << endl;
         return false;
     }
 
@@ -125,6 +125,7 @@ bool Shader::create(const char* vertexFile, const char* fragmentFile) {
     glAttachShader(mShaderId, mVertexShader);
     glAttachShader(mShaderId, mFragmentShader);
     glLinkProgram(mShaderId);
+    glValidateProgram(mShaderId);
 
     // Check if the programm is linked and validated successfully
     if (!isLinkedProgram() || !isValidProgram()) {
@@ -154,6 +155,7 @@ void Shader::setMatrixUniform(const char* name, const glm::mat4& matrix) {
 // there should be a better design pattern (Builder, Factory, ...) somewhere
 // and I don't want to put to much code in the constructor
 void Shader::setActive() {
+    cout << "Using Shader ID: " << mShaderId << endl;
     glUseProgram(mShaderId);
 }
 
@@ -170,7 +172,6 @@ void Shader::clear() {
         glDeleteShader(mFragmentShader);
     }
 }
-
 
 Shader::~Shader() {
     clear();

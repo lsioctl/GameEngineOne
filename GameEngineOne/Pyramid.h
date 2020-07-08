@@ -5,10 +5,11 @@
 class Pyramid : public Model {
 public:
     Pyramid() {
-        // did not find another way to do this
-        // as I know only now what would be the size of the array
+        // I know only now what would be the size of the array
+        // I can't find a way to avoid specifying the size
         // TODO: find a better pattern
-        unsigned int tempIndices[] = {
+        mIndicesSize = 18;
+        mIndices  = new unsigned int[mIndicesSize] {
             // bottom
             0, 1, 2,
             2, 3, 0,
@@ -22,11 +23,8 @@ public:
             13, 14, 15,
         };
 
-        mIndices = tempIndices;
-
-        mIndicesSize = sizeof(tempIndices) / sizeof(tempIndices[0]);
-
-        GLfloat tempVertices[] = {
+        mVerticesSize = 128;
+        mVertices = new GLfloat[mVerticesSize] {
             // x    y      z     u  v          nx    ny    nz
             // bottom of the pyramid
             -1.0f, -1.0f, -1.0f, 0.0f, 0.0f,  0.0f, +1.0f, 0.0f,
@@ -50,9 +48,15 @@ public:
             -1.0f, -1.0f, 1.0f,  1.0f, 0.0f,  0.0f, -0.5f, 1.0f,
             0.0f, 1.0f, 0.0f,  0.5f, 1.0f,    0.0f, -0.5f, 1.0f,
         };
-
-        mVertices = tempVertices;
-
-        mVerticesSize = sizeof(tempVertices) / sizeof(tempVertices[0]);
 	}
+
+    ~Pyramid() {
+        // this is also not clean
+        // as the new[] as been called here, only child class nows the 
+        // delete[] and not the delete must be called
+        delete[] mIndices;
+        delete[] mVertices;
+
+    }
+
 };

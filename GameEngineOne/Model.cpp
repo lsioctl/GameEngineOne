@@ -1,4 +1,8 @@
 #include "Model.h"
+#include <iostream>
+
+using namespace std;
+Model::Model() : mIndices{ nullptr }, mVertices{ nullptr }, mIndicesSize{ 0 }, mVerticesSize{ 0 } {};
 
 // TODO: return const pointer to avoid data corruption
 // TODO: singleton or something alike

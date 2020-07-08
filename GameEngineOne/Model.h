@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <GL/glew.h>
 
 class Model {
@@ -8,6 +9,7 @@ public:
 	unsigned int getVerticesSize();
 	unsigned int getIndicesSize();
 protected:
+	Model();
 	GLfloat* mVertices;
 	unsigned int* mIndices;
 	unsigned int mVerticesSize;

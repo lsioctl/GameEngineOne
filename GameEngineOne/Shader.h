@@ -26,7 +26,4 @@ private:
 	bool isCompiled(GLuint shaderId, GLenum shaderType);
 	bool isLinkedProgram();
 	bool isValidProgram();
-	// TODO: not applicable to all shader, refactor
-	void setUniforms();
-
 };
