@@ -12,18 +12,21 @@ using namespace std;
 GLdouble deltaTime{ 0.0 };
 GLdouble lastTime{ 0.0 };
 
+
 int main() {
+	// All objects are created in the heap to avoid memory limits of the stack
+	// as a game could have many objects
+	// TODO: is it appropriate ?
+	// TODO: as I use unique_ptr, does passing by pointer is OK ?
 	auto mainWindow = make_unique<GameWindow>(800, 600);
 	mainWindow->create();
 
-	Pyramid pyramidModel = Pyramid();
+	auto pyramidModel = make_unique<Pyramid>();
 
 	// TODO: find another constructor or pattern
-	Mesh pyramidMesh = Mesh();
-	
-	pyramidMesh.createFromModel(pyramidModel);
+	auto pyramidMesh = make_unique<Mesh>();
+	pyramidMesh->createFromModel(pyramidModel.get());
 
-	// Shaders are created in the heap to avoid memory limits of the stack
 	auto simpleShader = make_unique<Shader>();
 	simpleShader->create("shaders/simple.vert", "shaders/simple.frag");
 
@@ -48,7 +51,7 @@ int main() {
 		simpleShader->setActive();
 
 		// not sure of the pattern to apply here with smart pointers
-		pyramidObject->render(&pyramidMesh, simpleShader.get());
+		pyramidObject->render(pyramidMesh.get(), simpleShader.get());
 				
 		// back buffer is drawn
 		// Swap front and back buffers
