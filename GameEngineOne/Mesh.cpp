@@ -39,6 +39,15 @@ void Mesh::create(GLfloat* vertices, unsigned int verticesSize, unsigned int* in
 
 }
 
+void Mesh::createFromModel(Model& model) {
+    create(
+        model.getVertices(),
+        model.getVerticesSize(),
+        model.getIndices(),
+        model.getIndicesSize()
+    );
+}
+
 void Mesh::render() {
     // TODO: render is done with active shaders and textures
    

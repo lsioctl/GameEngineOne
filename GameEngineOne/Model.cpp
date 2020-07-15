@@ -2,7 +2,9 @@
 #include <iostream>
 
 using namespace std;
-Model::Model() : mIndices{ nullptr }, mVertices{ nullptr }, mIndicesSize{ 0 }, mVerticesSize{ 0 } {};
+Model::Model() : mIndices{ nullptr }, mVertices{ nullptr }, mIndicesSize{ 0 }, mVerticesSize{ 0 } {
+    cout << "Model constructor called" << endl;
+};
 
 // TODO: return const pointer to avoid data corruption
 // TODO: singleton or something alike

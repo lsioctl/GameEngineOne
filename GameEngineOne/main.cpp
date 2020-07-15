@@ -1,10 +1,10 @@
 #include <iostream>
 #include <memory>
-#include <glm/gtc/matrix_transform.hpp>
 #include "GameWindow.h"
 #include "Pyramid.h"
 #include "Mesh.h"
 #include "Shader.h";
+#include "GameObject.h";
 
 
 using namespace std;
@@ -20,18 +20,14 @@ int main() {
 
 	// TODO: find another constructor or pattern
 	Mesh pyramidMesh = Mesh();
-	pyramidMesh.create(
-		pyramidModel.getVertices(),
-		pyramidModel.getVerticesSize(),
-		pyramidModel.getIndices(),
-		pyramidModel.getIndicesSize()
-	);
+	
+	pyramidMesh.createFromModel(pyramidModel);
 
-	Shader simpleShader = Shader();
-	simpleShader.create("shaders/simple.vert", "shaders/simple.frag");
+	// Shaders are created in the heap to avoid memory limits of the stack
+	auto simpleShader = make_unique<Shader>();
+	simpleShader->create("shaders/simple.vert", "shaders/simple.frag");
 
-	// every following render will use this shader program
-	simpleShader.setActive();
+	auto pyramidObject = make_unique<GameObject>();
 	
 	// main loop
 	while (!mainWindow->shouldClose()) {
@@ -46,22 +42,14 @@ int main() {
 		// Clear Window
 		mainWindow->clear();
 
-		// Calculate the world transform
-		// first we want identity matrix
-		glm::mat4 worldTransform = glm::mat4(1.0f);
+		pyramidObject->setScale(0.3f, 0.3f, 0.3f);
 
-		// firs translate
-		//worldTransform = glm::translate(worldTransform, glm::vec3(0.0f, 0.0f, -0.9f));
-		// then rotate
-		//worldTransform = glm::rotate(worldTransform, 2.0f, glm::vec3(1.0f, 1.0f, 0.0f));
-		// then scale
-		worldTransform = glm::scale(worldTransform, glm::vec3(0.3f, 0.3f, 0.3f));
+		// every following render will use this shader program
+		simpleShader->setActive();
 
-		// set world transform in the shader
-		simpleShader.setMatrixUniform("uWorldTransform", worldTransform);
-		
-		pyramidMesh.render();
-		
+		// not sure of the pattern to apply here with smart pointers
+		pyramidObject->render(&pyramidMesh, simpleShader.get());
+				
 		// back buffer is drawn
 		// Swap front and back buffers
 		mainWindow->swapBuffer();

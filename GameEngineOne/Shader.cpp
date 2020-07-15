@@ -155,7 +155,6 @@ void Shader::setMatrixUniform(const char* name, const glm::mat4& matrix) {
 // there should be a better design pattern (Builder, Factory, ...) somewhere
 // and I don't want to put to much code in the constructor
 void Shader::setActive() {
-    cout << "Using Shader ID: " << mShaderId << endl;
     glUseProgram(mShaderId);
 }
 

@@ -181,6 +181,7 @@ void GameWindow::swapBuffer() {
 void GameWindow::clear() {
     // alpha to 1 to be opaque
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     // bitwise operator to clear color and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
