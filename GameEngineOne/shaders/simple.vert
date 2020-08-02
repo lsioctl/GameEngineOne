@@ -3,6 +3,8 @@
 layout(location = 0) in vec3 inPosition;
 
 uniform mat4 uWorldTransform;
+uniform mat4 uViewTransform;
+uniform mat4 uProjectionTransform;
 
 out vec4 vertexColor;
 
@@ -12,7 +14,7 @@ void main() {
     vec4 pos = vec4(inPosition, 1.0f);
 
     // calculate position in the clipping space
-    gl_Position = uWorldTransform * pos;
+    gl_Position = uProjectionTransform * uViewTransform * uWorldTransform * pos;
     //gl_Position = pos;
 
     // make the vertex color depending on the model's vertex position
