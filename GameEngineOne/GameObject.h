@@ -14,7 +14,7 @@ public:
 	void setTranslation(float x, float y, float z);
 	void setRotation(float radians, float x, float y, float z);
 	void setScale(float x, float y, float z);
-	void render(Mesh* mesh, Shader* activeShader, Camera* camera);
+	void render(const Mesh* mesh, const Shader* activeShader, const Camera* camera);
 private:
 	glm::vec3 mTranslation;
 	float mRotationRadians;

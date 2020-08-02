@@ -11,7 +11,7 @@ public:
 	~Mesh();
 	void create(GLfloat* vertices, unsigned int verticesSize, unsigned int* indices, unsigned int indicesSize);
 	void createFromModel(Model* model);
-	void render();
+	void render() const;
 	void clear();
 private:
 	GLuint mVAO;

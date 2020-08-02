@@ -87,7 +87,7 @@ void Camera::mouseControl(GLfloat xChange, GLfloat yChange) {
 	update();
 }
 
-glm::mat4 Camera::getViewTransform() {
+glm::mat4 Camera::getViewTransform() const {
 	// calculate a matrix which look at
 	return glm::lookAt(
 		mPosition, // position
@@ -96,7 +96,7 @@ glm::mat4 Camera::getViewTransform() {
 	);
 }
 
-glm::vec3 Camera::getPosition() {
+glm::vec3 Camera::getPosition() const {
 	return mPosition;
 }
 
@@ -104,7 +104,7 @@ void Camera::setProjectionTransform(glm::mat4 perspective) {
 	mProjectionTransform = perspective;
 }
 
-glm::mat4 Camera::getProjectionTransform() {
+glm::mat4 Camera::getProjectionTransform() const {
 	return mProjectionTransform;
 }
 

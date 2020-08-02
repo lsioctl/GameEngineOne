@@ -37,7 +37,7 @@ void GameObject::setWorldTransform() {
 
 }
 
-void GameObject::render(Mesh* mesh, Shader* activeShader, Camera* camera) {
+void GameObject::render(Mesh* mesh, const Shader* activeShader, const Camera* camera) {
 	setWorldTransform();
 	// set world transform in the shader
 	activeShader->setMatrixUniform("uWorldTransform", mWorldTransform);

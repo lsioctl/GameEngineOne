@@ -135,8 +135,8 @@ bool Shader::create(const char* vertexFile, const char* fragmentFile) {
     return true;
 }
 
-
-void Shader::setMatrixUniform(const char* name, const glm::mat4& matrix) {
+// I consider this a const method as the c++ object is not, by itself, modified
+void Shader::setMatrixUniform (const char* name, const glm::mat4& matrix) const {
     // Find the uniform by its name
     GLuint location = glGetUniformLocation(mShaderId, name);
 

@@ -48,7 +48,7 @@ void Mesh::createFromModel(Model* model) {
     );
 }
 
-void Mesh::render() {
+void Mesh::render() const {
     // TODO: render is done with active shaders and textures
    
     // for some bug in Graphic Cards, we need it

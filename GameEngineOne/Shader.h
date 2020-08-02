@@ -13,7 +13,7 @@ public:
 	~Shader();
 	bool create(const char* vertexFile, const char* fragmentFile);
 	void setActive();
-	void setMatrixUniform(const char* name, const glm::mat4& matrix);
+	void setMatrixUniform(const char* name, const glm::mat4& matrix) const;
 	void clear();
 
 private:
