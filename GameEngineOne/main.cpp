@@ -82,7 +82,10 @@ int main() {
 
 		// Get and handle user input events
 		mainWindow.pollEvents();
-		
+
+		camera.keyControl(mainWindow.getKeys(), deltaTime);
+		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
+
 		// Clear Window
 		mainWindow.clear();
 
