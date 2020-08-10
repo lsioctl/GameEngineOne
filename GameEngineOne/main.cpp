@@ -3,9 +3,9 @@
 #include "GameWindow.h"
 #include "Pyramid.h"
 #include "Mesh.h"
-#include "Shader.h";
-#include "GameObject.h";
-#include "Camera.h";
+#include "Shader.h"
+#include "GameObject.h"
+#include "Camera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 using namespace std;
