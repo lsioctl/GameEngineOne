@@ -6,6 +6,7 @@
 #include "Shader.h"
 #include "Mesh.h"
 #include "Camera.h"
+#include <memory>
 
 
 class GameObject {
@@ -14,7 +15,7 @@ public:
 	void setTranslation(float x, float y, float z);
 	void setRotation(float radians, float x, float y, float z);
 	void setScale(float x, float y, float z);
-	void render(const Mesh* mesh, const Shader* activeShader, const Camera* camera);
+	void render(const std::unique_ptr<Mesh>& mesh, const std::unique_ptr<Shader>& activeShader, const Camera& camera);
 private:
 	glm::vec3 mTranslation;
 	float mRotationRadians;

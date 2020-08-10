@@ -37,12 +37,12 @@ void GameObject::setWorldTransform() {
 
 }
 
-void GameObject::render(const Mesh* mesh, const Shader* activeShader, const Camera* camera) {
+void GameObject::render(const std::unique_ptr<Mesh>& mesh, const std::unique_ptr<Shader>& activeShader, const Camera& camera) {
 	setWorldTransform();
 	// set world transform in the shader
 	activeShader->setMatrixUniform("uWorldTransform", mWorldTransform);
-	activeShader->setMatrixUniform("uViewTransform", camera->getViewTransform());
-	activeShader->setMatrixUniform("uProjectionTransform", camera->getProjectionTransform());
+	activeShader->setMatrixUniform("uViewTransform", camera.getViewTransform());
+	activeShader->setMatrixUniform("uProjectionTransform", camera.getProjectionTransform());
 
 	mesh->render();
 }

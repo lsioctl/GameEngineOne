@@ -95,7 +95,7 @@ int main() {
 		simpleShader->setActive();
 
 		// not sure of the pattern to apply here with smart pointers
-		pyramidObject->render(pyramidMesh.get(), simpleShader.get(), &camera);
+		pyramidObject->render(pyramidMesh, simpleShader, camera);
 				
 		// back buffer is drawn
 		// Swap front and back buffers
