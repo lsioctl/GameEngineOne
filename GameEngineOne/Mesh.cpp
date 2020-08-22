@@ -39,12 +39,12 @@ void Mesh::create(GLfloat* vertices, unsigned int verticesSize, unsigned int* in
 
 }
 
-void Mesh::createFromModel(Model* model) {
+void Mesh::createFromModel(const Model& model) {
     create(
-        model->getVertices(),
-        model->getVerticesSize(),
-        model->getIndices(),
-        model->getIndicesSize()
+        model.getVertices(),
+        model.getVerticesSize(),
+        model.getIndices(),
+        model.getIndicesSize()
     );
 }
 

@@ -61,11 +61,15 @@ int main() {
 	// TODO: vector (contiguous in HEAP, but slicing possible) of objects or vector of pointers
 	// TODO: as I use unique_ptr, does passing by pointer is OK ?
 
-	auto pyramidModel = make_unique<Pyramid>();
+	unique_ptr<Model> pyramidModel = make_unique<Pyramid>();
+	auto p2 = make_unique<Pyramid>;
+
+	cout << typeid(pyramidModel).name() << endl;
+	cout << typeid(p2).name() << endl;
 
 	// TODO: find another constructor or pattern
 	auto pyramidMesh = make_unique<Mesh>();
-	pyramidMesh->createFromModel(pyramidModel.get());
+	pyramidMesh->createFromModel(*pyramidModel);
 
 	auto simpleShader = make_unique<Shader>();
 	simpleShader->create("shaders/simple.vert", "shaders/simple.frag");
@@ -95,7 +99,7 @@ int main() {
 		simpleShader->setActive();
 
 		// not sure of the pattern to apply here with smart pointers
-		pyramidObject->render(pyramidMesh, simpleShader, camera);
+		pyramidObject->render(*pyramidMesh, *simpleShader, camera);
 				
 		// back buffer is drawn
 		// Swap front and back buffers

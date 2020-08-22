@@ -10,7 +10,7 @@ public:
 	Mesh();
 	~Mesh();
 	void create(GLfloat* vertices, unsigned int verticesSize, unsigned int* indices, unsigned int indicesSize);
-	void createFromModel(Model* model);
+	void createFromModel(const Model& model);
 	void render() const;
 	void clear();
 private:

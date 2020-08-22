@@ -8,18 +8,18 @@ Model::Model() : mIndices{ nullptr }, mVertices{ nullptr }, mIndicesSize{ 0 }, m
 
 // TODO: return const pointer to avoid data corruption
 // TODO: singleton or something alike
-GLfloat* Model::getVertices() {
+GLfloat* Model::getVertices() const {
     return mVertices;
 }
 
-unsigned int* Model::getIndices() {
+unsigned int* Model::getIndices() const {
     return mIndices;
 }
 
-unsigned int Model::getVerticesSize() {
+unsigned int Model::getVerticesSize() const {
     return mVerticesSize;
 }
 
-unsigned int Model::getIndicesSize() {
+unsigned int Model::getIndicesSize() const {
     return mIndicesSize;
 }
