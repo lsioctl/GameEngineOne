@@ -39,12 +39,54 @@ void Mesh::create(GLfloat* vertices, unsigned int verticesSize, unsigned int* in
 
 }
 
-void Mesh::createFromModel(Model* model) {
-    create(
-        model->getVertices(),
-        model->getVerticesSize(),
-        model->getIndices(),
-        model->getIndicesSize()
+void Mesh::create2(std::vector<GLfloat> vertices, unsigned int verticesSize, std::vector<unsigned int> indices, unsigned int indicesSize) {
+
+    // keep track of number of indexes, it will be needed for render()
+    mIndexCount = indicesSize;
+
+    // Note: &mVAO equivalent to &this->mVAO or &(this->mVAO)
+    glGenVertexArrays(1, &mVAO);
+    glBindVertexArray(mVAO);
+
+    glGenBuffers(1, &mIBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSize * sizeof(indices[0]), indices.data(), GL_STATIC_DRAW);
+
+    glGenBuffers(1, &mVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+    glBufferData(GL_ARRAY_BUFFER, verticesSize * sizeof(vertices[0]), vertices.data(), GL_STATIC_DRAW);
+
+    // here 0 refers to the same 'stuff' (a bit lost for now)
+    // with u v coordinates, we will have 3 values out of 8 for the vertices
+    // stride is here for that purpose
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]) * 8, 0);
+    // slot 1 for u, v so for texture coordinates
+    // offset for the first value is 3
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vertices[0]) * 8, (void*)(sizeof(vertices[0]) * 3));
+    // for normals
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]) * 8, (void*)(sizeof(vertices[0]) * 5));
+    // enable vertices, texture and normal on VAO
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
+
+}
+
+void Mesh::create(const std::vector<unsigned int>& indices, const std::vector<GLfloat>& vertices) {
+    create2(
+        vertices,
+        vertices.size(),
+        indices,
+        indices.size()
+    );
+}
+
+void Mesh::createFromHeaders(const std::unique_ptr<Model2>& modelPtr) {
+    create2(
+        modelPtr->getVertices(),
+        modelPtr->getVertices().size(),
+        modelPtr->getIndices(),
+        modelPtr->getIndices().size()
     );
 }
 

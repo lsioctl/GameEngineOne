@@ -1,12 +1,14 @@
 #include <iostream>
 #include <memory>
+#include <vector>
+#include <glm/gtc/matrix_transform.hpp>
 #include "GameWindow.h"
-#include "Pyramid.h"
+#include "Pyramid2.h"
+#include "Pyramid3.h"
 #include "Mesh.h"
 #include "Shader.h"
 #include "GameObject.h"
 #include "Camera.h"
-#include <glm/gtc/matrix_transform.hpp>
 
 using namespace std;
 
@@ -18,12 +20,8 @@ int main() {
 
 	// all main objects uses intensively and everywhere
 	// are created in the stack
-	// 1. they are small
-	// 2. as the are called at every frame, I don't want 
-	// dereference cost to occur
 
 	GameWindow mainWindow{ 800, 600 };
-
 	mainWindow.create();
 
 	// standard fov 45.0, y direction. Top to bottom
@@ -38,7 +36,7 @@ int main() {
 	};
 
 	Camera camera{
-		glm::vec3(0.0f, 0.0f, 0.0f), // position
+		glm::vec3(0.0f, 0.0f, 3.0f), // position
 		glm::vec3(0.0f, 1.0f, 0.0f), // worldUp
 		-90.0f, // yaw
 		0.0f, // pitch
@@ -56,16 +54,16 @@ int main() {
 	));
 
 	// All game objects are created in the heap to avoid memory limits of the stack
-	// as a game could have many objects
-	// TODO: is it appropriate ?
-	// TODO: vector (contiguous in HEAP, but slicing possible) of objects or vector of pointers
-	// TODO: as I use unique_ptr, does passing by pointer is OK ?
-
-	auto pyramidModel = make_unique<Pyramid>();
+	// as:  objects could be heavy and a game could have many objects
+	//auto pyramidModelPtr = make_unique<Pyramid3>();
+	std::unique_ptr<Model2> pyramidModelPtr = make_unique<Pyramid2>();
 
 	// TODO: find another constructor or pattern
 	auto pyramidMesh = make_unique<Mesh>();
-	pyramidMesh->createFromModel(pyramidModel.get());
+
+	//pyramidMesh->create(pyramidModelPtr->indices, pyramidModelPtr->vertices);
+	//pyramidMesh->create(pyramidModelPtr->getIndices(), pyramidModelPtr->getVertices());
+	pyramidMesh->createFromHeaders(pyramidModelPtr);
 
 	auto simpleShader = make_unique<Shader>();
 	simpleShader->create("shaders/simple.vert", "shaders/simple.frag");
@@ -88,6 +86,8 @@ int main() {
 
 		// Clear Window
 		mainWindow.clear();
+
+		pyramidObject->setTranslation(0.0f, 0.0f, -3.0f);
 
 		pyramidObject->setScale(0.3f, 0.3f, 0.3f);
 

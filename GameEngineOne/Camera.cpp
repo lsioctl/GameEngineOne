@@ -18,8 +18,8 @@ Camera::Camera(glm::vec3 position, glm::vec3 worldUp, GLfloat yaw, GLfloat pitch
 void Camera::update() {
 	// something was weird in theory lesson
 	// for me, at 0 pitch and 0 yaw, I should face along the z axis
-	// so I inverted z and x on the formula
 	// but in the course, he starts with a yaw of 90 degrees
+	// same on learnopengl
 	mFront.x = cos(glm::radians(mYaw)) * cos(glm::radians(mPitch));
 	mFront.y = sin(glm::radians(mPitch));
 	mFront.z = sin(glm::radians(mYaw)) * cos(glm::radians(mPitch));
@@ -31,9 +31,9 @@ void Camera::update() {
 	//mRight = glm::normalize(glm::cross(mWorldUp, mFront));
 	mRight = glm::normalize(glm::cross(mFront, mWorldUp));
 	/*cout << "right is:" << endl;
-	cout << right.x << endl;
-	cout << right.y << endl;
-	cout << right.z << endl;*/
+	cout << mRight.x << endl;
+	cout << mRight.y << endl;
+	cout << mRight.z << endl;*/
 
 	// find the actual up
 	//mUp = glm::normalize(glm::cross(mFront, mRight));
@@ -88,6 +88,9 @@ void Camera::mouseControl(GLfloat xChange, GLfloat yChange) {
 }
 
 glm::mat4 Camera::getViewTransform() const {
+	/*cout << "Position:" << mPosition.x << endl;
+	cout << "Position:" << mPosition.y << endl;
+	cout << "Position:" << mPosition.z << endl;*/
 	// calculate a matrix which look at
 	return glm::lookAt(
 		mPosition, // position
