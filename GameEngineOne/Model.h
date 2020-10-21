@@ -4,10 +4,10 @@
 
 class Model {
 public:
-	GLfloat* getVertices();
-	unsigned int* getIndices();
-	unsigned int getVerticesSize();
-	unsigned int getIndicesSize();
+	GLfloat* getVertices() const;
+	unsigned int* getIndices() const;
+	unsigned int getVerticesSize() const;
+	unsigned int getIndicesSize() const;
 protected:
 	Model();
 	GLfloat* mVertices;
