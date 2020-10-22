@@ -25,10 +25,11 @@ int main() {
 
 	// standard fov 45.0, y direction. Top to bottom
 	// aspect ratio: widht/height of the window
+	const auto aspectRatio{ static_cast<GLfloat>(mainWindow.getBufferWidth() / mainWindow.getBufferHeight()) };
 	glm::mat4 projection{
 		glm::perspective(
 			45.0f, //fov y
-			((GLfloat)mainWindow.getBufferWidth() / (GLfloat)mainWindow.getBufferHeight()), //aspect ratio
+			aspectRatio,
 			0.1f, //near
 			100.0f //far
 		)
