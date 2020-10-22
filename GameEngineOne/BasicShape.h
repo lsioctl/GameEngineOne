@@ -6,12 +6,13 @@
 // this is, for me a 'non polymorphic base class'
 // it is there to store vectors declared in headers
 // like pyramid.h
-class Model2 {
+// the absence of virtual method is wanted
+class BasicShape {
 public:
-	virtual const std::vector<GLfloat>& getVertices() const;
-	virtual const std::vector<unsigned int>& getIndices() const;
+	const std::vector<GLfloat>& getVertices() const;
+	const std::vector<unsigned int>& getIndices() const;
 protected:
-	Model2();
+	BasicShape();
 	static const std::vector<GLfloat> mVertices;
 	static const std::vector<unsigned int> mIndices;
 };

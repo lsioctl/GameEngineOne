@@ -3,8 +3,7 @@
 #include <vector>
 #include <glm/gtc/matrix_transform.hpp>
 #include "GameWindow.h"
-#include "Pyramid2.h"
-#include "Pyramid3.h"
+#include "PyramidShape.h"
 #include "Mesh.h"
 #include "Shader.h"
 #include "GameObject.h"
@@ -56,14 +55,14 @@ int main() {
 	// All game objects are created in the heap to avoid memory limits of the stack
 	// as:  objects could be heavy and a game could have many objects
 	//auto pyramidModelPtr = make_unique<Pyramid3>();
-	std::unique_ptr<Model2> pyramidModelPtr = make_unique<Pyramid2>();
+	std::unique_ptr<BasicShape> pyramidShapePtr = make_unique<PyramidShape>();
 
 	// TODO: find another constructor or pattern
 	auto pyramidMesh = make_unique<Mesh>();
 
 	//pyramidMesh->create(pyramidModelPtr->indices, pyramidModelPtr->vertices);
 	//pyramidMesh->create(pyramidModelPtr->getIndices(), pyramidModelPtr->getVertices());
-	pyramidMesh->createFromHeaders(pyramidModelPtr);
+	pyramidMesh->createFromShape(pyramidShapePtr);
 
 	auto simpleShader = make_unique<Shader>();
 	simpleShader->create("shaders/simple.vert", "shaders/simple.frag");

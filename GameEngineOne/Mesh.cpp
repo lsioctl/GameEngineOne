@@ -81,12 +81,12 @@ void Mesh::create(const std::vector<unsigned int>& indices, const std::vector<GL
     );
 }
 
-void Mesh::createFromHeaders(const std::unique_ptr<Model2>& modelPtr) {
+void Mesh::createFromShape(const std::unique_ptr<BasicShape>& shapePtr) {
     create2(
-        modelPtr->getVertices(),
-        modelPtr->getVertices().size(),
-        modelPtr->getIndices(),
-        modelPtr->getIndices().size()
+        shapePtr->getVertices(),
+        shapePtr->getVertices().size(),
+        shapePtr->getIndices(),
+        shapePtr->getIndices().size()
     );
 }
 

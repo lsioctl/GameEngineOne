@@ -1,14 +1,13 @@
 #pragma once
+#include "BasicShape.h"
 
-#include "Model2.h"
-
-class Pyramid2 : public Model2 {
+class PyramidShape : public BasicShape {
 };
 
 // static so can't be initialized in constructor
 // TODO: maybe a way with C++17 to add it in the class
 // with inline static
-const std::vector<unsigned int> Pyramid2::mIndices = {
+const std::vector<unsigned int> PyramidShape::mIndices = {
     // bottom
     0, 1, 2,
         2, 3, 0,
@@ -22,7 +21,7 @@ const std::vector<unsigned int> Pyramid2::mIndices = {
         13, 14, 15,
 };
 
-const std::vector<GLfloat> Pyramid2::mVertices = {
+const std::vector<GLfloat> PyramidShape::mVertices = {
     // x    y      z     u  v          nx    ny    nz
     // bottom of the pyramid
     -1.0f, -1.0f, -1.0f, 0.0f, 0.0f,  0.0f, +1.0f, 0.0f,
