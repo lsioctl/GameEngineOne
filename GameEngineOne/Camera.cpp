@@ -40,11 +40,11 @@ void Camera::update() {
 	mUp = glm::normalize(glm::cross(mRight, mFront));
 }
 
-void Camera::keyControl(bool* keys, GLfloat deltaTime) {
+void Camera::keyControl(bool* keys, GLdouble deltaTime) {
 	// need to handle deltat time because we could press
 	// keys through a lot of a cycle
 
-	GLfloat velocity = mMoveSpeed * deltaTime;
+	GLfloat velocity = mMoveSpeed * static_cast<GLfloat>(deltaTime);
 
 	if (keys[GLFW_KEY_W]) {
 		mPosition += mFront * velocity;

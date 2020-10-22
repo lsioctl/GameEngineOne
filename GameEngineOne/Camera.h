@@ -12,7 +12,7 @@ class Camera
 {
 public:
 	Camera(glm::vec3 position, glm::vec3 worldUp, GLfloat yaw, GLfloat pitch, GLfloat movespeed, GLfloat turnspeed);
-	void keyControl(bool* keys, GLfloat deltaTime);
+	void keyControl(bool* keys, GLdouble deltaTime);
 	void mouseControl(GLfloat xChange, GLfloat yChange);
 	glm::vec3 getPosition() const;
 	glm::mat4 getViewTransform() const;
