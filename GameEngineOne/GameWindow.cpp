@@ -61,6 +61,7 @@ int GameWindow::create() {
         std::cout << "Glew init failed" << std::endl;
         glfwDestroyWindow(this->mWindow);
         glfwTerminate();
+        return 1;
     }
 
     // enable GL DEPTH BUFFER
@@ -79,6 +80,7 @@ int GameWindow::create() {
     // ensure the cursor is disabled when captured
     glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+    return 0;
 }
 
 void GameWindow::handleKeys(GLFWwindow* window, int key, int code, int action, int mode) {
@@ -118,20 +120,23 @@ void GameWindow::pollEvents() {
 void GameWindow::handleMouse(GLFWwindow* window, double xPos, double yPos) {
     // get the GameWindow instance using the GLFW window
     GameWindow* theWindow = static_cast<GameWindow*>(glfwGetWindowUserPointer(window));
+    // GLFW callback function have incorrect type for what we need
+    auto floatXPos = static_cast<GLfloat>(xPos);
+    auto floatYPos = static_cast<GLfloat>(yPos);
 
     if (theWindow->mMouseFirstMoved) {
-        theWindow->mLastX = xPos;
-        theWindow->mLastY = yPos;
+        theWindow->mLastX = floatXPos;
+        theWindow->mLastY = floatYPos;
         theWindow->mMouseFirstMoved = false;
         return;
     }
 
-    theWindow->mChangeX = xPos - theWindow->mLastX;
+    theWindow->mChangeX = floatXPos - theWindow->mLastX;
     // defend if want inverted control
-    theWindow->mChangeY = theWindow->mLastY - yPos;
+    theWindow->mChangeY = theWindow->mLastY - floatYPos;
 
-    theWindow->mLastX = xPos;
-    theWindow->mLastY = yPos;
+    theWindow->mLastX = floatXPos;
+    theWindow->mLastY = floatYPos;
 
     //cout << "changeX " << theWindow->changeX << endl;
     //cout << "changeY " << theWindow->changeY << endl;
