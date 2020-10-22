@@ -62,7 +62,7 @@ int main() {
 
 	//pyramidMesh->create(pyramidModelPtr->indices, pyramidModelPtr->vertices);
 	//pyramidMesh->create(pyramidModelPtr->getIndices(), pyramidModelPtr->getVertices());
-	pyramidMesh->createFromShape(pyramidShapePtr);
+	pyramidMesh->create(pyramidShapePtr);
 
 	auto simpleShader = make_unique<Shader>();
 	simpleShader->create("shaders/simple.vert", "shaders/simple.frag");
