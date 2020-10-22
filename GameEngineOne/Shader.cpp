@@ -94,7 +94,7 @@ bool Shader::compile(const char* shaderFile, GLenum shaderType, GLuint& outShade
 
     // this:
     const GLchar* theCode[] = { shaderCode };
-    GLint codeLength[] = { strlen(shaderCode) };
+    GLint codeLength[] = { static_cast<GLint>(strlen(shaderCode)) };
     // may be replaced by something like this:
     //glShaderSource(outShader, 1, &(shaderCode), nullptr);
     glShaderSource(outShader, 1, theCode, codeLength);
