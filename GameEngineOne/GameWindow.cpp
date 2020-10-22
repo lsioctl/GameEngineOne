@@ -22,7 +22,7 @@ void GameWindow::createCallbacks() {
 int GameWindow::create() {
     // Initialize GLFW
     if (!glfwInit()) {
-        cout << "GLFW init failed" << endl;
+        std::cout << "GLFW init failed" << std::endl;
         glfwTerminate();
         return 1;
     }
@@ -41,7 +41,7 @@ int GameWindow::create() {
     this->height = height;*/
 
     if (!mWindow) {
-        cout << "GLFW window creation failed" << endl;
+        std::cout << "GLFW window creation failed" << std::endl;
         glfwTerminate();
         return 1;
     }
@@ -58,7 +58,7 @@ int GameWindow::create() {
     glewExperimental = GL_TRUE;
 
     if (glewInit() != GLEW_OK) {
-        cout << "Glew init failed" << endl;
+        std::cout << "Glew init failed" << std::endl;
         glfwDestroyWindow(this->mWindow);
         glfwTerminate();
     }

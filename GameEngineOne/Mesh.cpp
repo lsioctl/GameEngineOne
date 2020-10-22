@@ -51,10 +51,10 @@ void Mesh::create(const std::vector<unsigned int>& indices, const std::vector<GL
     );
 }
 
-void Mesh::create(const std::unique_ptr<BasicShape>& shapePtr) {
+void Mesh::create(const BasicShape& shape) {
     create(
-        shapePtr->getIndices(),
-        shapePtr->getVertices()
+        shape.getIndices(),
+        shape.getVertices()
     );
 }
 
