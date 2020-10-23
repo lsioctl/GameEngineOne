@@ -9,12 +9,12 @@
 // the absence of virtual method is wanted
 class BasicShape {
 public:
-	const std::vector<GLfloat>& getVertices() const;
-	const std::vector<unsigned int>& getIndices() const;
+	virtual const std::vector<GLfloat>& getVertices() const;
+	virtual const std::vector<unsigned int>& getIndices() const;
 protected:
 	BasicShape();
-	static const std::vector<GLfloat> mVertices;
-	static const std::vector<unsigned int> mIndices;
+	const std::vector<GLfloat> mVertices;
+	const std::vector<unsigned int> mIndices;
 };
 
 
