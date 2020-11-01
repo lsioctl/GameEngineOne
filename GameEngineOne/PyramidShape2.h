@@ -1,13 +1,9 @@
 #pragma once
-#include <vector>
+#include "BasicShape.h"
 
-namespace shape {
-    struct Pyramid {
-        static const std::vector<unsigned int> indices;
-        static const std::vector<GLfloat> vertices;
-    };
+namespace shapes {
 
-    const std::vector<unsigned int> Pyramid::indices{
+    std::vector<unsigned int> tempIndices = {
         // bottom
         0, 1, 2,
         2, 3, 0,
@@ -21,7 +17,7 @@ namespace shape {
         13, 14, 15,
     };
 
-    const std::vector<GLfloat> Pyramid::vertices{
+    std::vector<GLfloat> tempVertices = {
         // x    y      z     u  v          nx    ny    nz
         // bottom of the pyramid
         -1.0f, -1.0f, -1.0f, 0.0f, 0.0f,  0.0f, +1.0f, 0.0f,
@@ -45,5 +41,3 @@ namespace shape {
         -1.0f, -1.0f, 1.0f,  1.0f, 0.0f,  0.0f, -0.5f, 1.0f,
         0.0f, 1.0f, 0.0f,  0.5f, 1.0f,    0.0f, -0.5f, 1.0f,
     };
-};
-

@@ -55,10 +55,8 @@ int main() {
 
 	// All game objects are created in the heap to avoid memory limits of the stack
 	// as:  objects could be heavy and a game could have many objects
-	std::unique_ptr<BasicShape> pyramidShapePtr = make_unique<PyramidShape>();
-
 	auto pyramidMesh = make_unique<Mesh>();
-	pyramidMesh->create(*pyramidShapePtr);
+	pyramidMesh->create(shape::Pyramid::indices, shape::Pyramid::vertices);
 
 	auto simpleShader = make_unique<Shader>();
 	simpleShader->create("shaders/simple.vert", "shaders/simple.frag");

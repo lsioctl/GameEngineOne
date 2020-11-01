@@ -51,13 +51,6 @@ void Mesh::create(const std::vector<unsigned int>& indices, const std::vector<GL
     );
 }
 
-void Mesh::create(const BasicShape& shape) {
-    create(
-        shape.getIndices(),
-        shape.getVertices()
-    );
-}
-
 void Mesh::render() const {
     // TODO: render is done with active shaders and textures
    
