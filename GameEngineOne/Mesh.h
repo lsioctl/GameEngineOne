@@ -12,6 +12,7 @@ public:
 	~Mesh();
 	void create(const GLfloat* vertices, unsigned int verticesSize, const unsigned int* indices, unsigned int indicesSize);
 	void create(const std::vector<unsigned int>& indices, const std::vector<GLfloat>& vertices);
+	// const for the object, not in sense of purity, at is has a lot of side effects
 	void render() const;
 	void clear();
 private:

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Mesh::Mesh() : mVAO{ 0 }, mVBO{ 0 }, mIBO{ 0 }, mIndexCount{ 0 } {
+Mesh::Mesh() : mVAO{0}, mVBO{0}, mIBO{0}, mIndexCount{0} {
 }
 
 // when array decay to pointer, sizeof(pointer) gives the size of the pointer, we lost sizeof(array)
@@ -11,32 +11,56 @@ void Mesh::create(const GLfloat* vertices, unsigned int verticesSize, const unsi
     // keep track of number of indexes, it will be needed for render()
     mIndexCount = indicesSize;
 
-    // Note: &mVAO equivalent to &this->mVAO or &(this->mVAO)
+    // create a vertex array and store its id
     glGenVertexArrays(1, &mVAO);
+    // note: this change the vertex array for everyone
     glBindVertexArray(mVAO);
 
-    glGenBuffers(1, &mIBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSize * sizeof(indices[0]), indices, GL_STATIC_DRAW);
-
+    // create a vertex buffer
     glGenBuffers(1, &mVBO);
     glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+    // copy the vertices data to the vertex buffer
     glBufferData(GL_ARRAY_BUFFER, verticesSize * sizeof(vertices[0]), vertices, GL_STATIC_DRAW);
 
-    // here 0 refers to the same 'stuff' (a bit lost for now)
-    // with u v coordinates, we will have 3 values out of 8 for the vertices
-    // stride is here for that purpose
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]) * 8, 0);
-    // slot 1 for u, v so for texture coordinates
-    // offset for the first value is 3
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vertices[0]) * 8, (void*)(sizeof(vertices[0]) * 3));
-    // for normals
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]) * 8, (void*)(sizeof(vertices[0]) * 5));
-    // enable vertices, texture and normal on VAO
+    // create an index buffer
+    glGenBuffers(1, &mIBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIBO);
+    // copy the indices data to the index buffer
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSize * sizeof(indices[0]), indices, GL_STATIC_DRAW);
+
+    // Vertex layout (also name vertex attributes)
+    // Vertices
+    glVertexAttribPointer(
+        0,                          // Attribute index
+        3,                          // Number of components
+        GL_FLOAT,                   // type of the component
+        GL_FALSE,                   // Only used for integral types
+        sizeof(vertices[0]) * 8,    // Strides
+        0                           // Offset from start of vertex to this attribute
+    );
+    // u, v coordinate (textures)
+    glVertexAttribPointer(
+        1,
+        2,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(vertices[0]) * 8,
+        (void*)(sizeof(vertices[0]) * 3)
+    );
+    // normals
+    glVertexAttribPointer(
+        2,
+        3,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(vertices[0]) * 8,
+        (void*)(sizeof(vertices[0]) * 5)
+    );
+
+    // enable vertices, texture and normals on VAO
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
-
 }
 
 void Mesh::create(const std::vector<unsigned int>& indices, const std::vector<GLfloat>& vertices) {
@@ -52,6 +76,9 @@ void Mesh::create(const std::vector<unsigned int>& indices, const std::vector<GL
 }
 
 void Mesh::render() const {
+    // reactivate the vertex array (as it is called by each
+    // other vertex array creation)
+    glBindVertexArray(mVAO);
     // TODO: render is done with active shaders and textures
    
     // for some bug in Graphic Cards, we need it

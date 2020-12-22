@@ -1,9 +1,12 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+
 #include <glm/gtc/matrix_transform.hpp>
+
 #include "GameWindow.h"
 #include "PyramidShape.h"
+#include "CubeShape.h"
 #include "Mesh.h"
 #include "Shader.h"
 #include "GameObject.h"
@@ -58,10 +61,18 @@ int main() {
 	auto pyramidMesh = make_unique<Mesh>();
 	pyramidMesh->create(shape::Pyramid::indices, shape::Pyramid::vertices);
 
+	auto cubeMesh = make_unique<Mesh>();
+	cubeMesh->create(shape::Cube::indices, shape::Cube::vertices);
+
 	auto simpleShader = make_unique<Shader>();
 	simpleShader->create("shaders/simple.vert", "shaders/simple.frag");
 
+	// auto cubeShader = make_unique<Shader>();
+	// cubeShader->create("shaders/simple.vert", "shaders/simple.frag");
+
 	auto pyramidObject = make_unique<GameObject>();
+	auto pyramidObject2 = make_unique<GameObject>();
+	auto cubeObject = make_unique<GameObject>();
 	
 	// main loop
 	while (!mainWindow.shouldClose()) {
@@ -69,7 +80,6 @@ int main() {
 		GLdouble now{ glfwGetTime() };
 		deltaTime = now - lastTime;
 		lastTime = now;
-
 
 		// Get and handle user input events
 		mainWindow.pollEvents();
@@ -82,11 +92,16 @@ int main() {
 
 		pyramidObject->setTranslation(0.0f, 0.0f, -3.0f);
 		pyramidObject->setScale(0.3f, 0.3f, 0.3f);
+		pyramidObject2->setTranslation(-3.0f, 0.0f, -3.0f);
+		pyramidObject2->setScale(0.3f, 0.3f, 0.3f);
+		cubeObject->setTranslation(0.0f, 3.0f, -3.0f);
 
 		// every following render will use this shader program
 		simpleShader->setActive();
 
 		pyramidObject->render(*pyramidMesh, *simpleShader, camera);
+		pyramidObject2->render(*pyramidMesh, *simpleShader, camera);
+		cubeObject->render(*cubeMesh, *simpleShader, camera);
 
 		// back buffer is drawn
 		// Swap front and back buffers
