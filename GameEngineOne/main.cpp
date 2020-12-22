@@ -67,12 +67,16 @@ int main() {
 	auto simpleShader = make_unique<Shader>();
 	simpleShader->create("shaders/simple.vert", "shaders/simple.frag");
 
+	auto simpleWhiteShader = make_unique<Shader>();
+	simpleWhiteShader->create("shaders/simpleWhite.vert", "shaders/simpleWhite.frag");
+
 	// auto cubeShader = make_unique<Shader>();
 	// cubeShader->create("shaders/simple.vert", "shaders/simple.frag");
 
 	auto pyramidObject = make_unique<GameObject>();
 	auto pyramidObject2 = make_unique<GameObject>();
 	auto cubeObject = make_unique<GameObject>();
+	auto cubeObject2 = make_unique<GameObject>();
 	
 	// main loop
 	while (!mainWindow.shouldClose()) {
@@ -95,6 +99,8 @@ int main() {
 		pyramidObject2->setTranslation(-3.0f, 0.0f, -3.0f);
 		pyramidObject2->setScale(0.3f, 0.3f, 0.3f);
 		cubeObject->setTranslation(0.0f, 3.0f, -3.0f);
+		cubeObject2->setTranslation(3.0f, 3.0f, -3.0f);
+		cubeObject2->setScale(0.3f, 0.3f, 0.3f);
 
 		// every following render will use this shader program
 		simpleShader->setActive();
@@ -102,6 +108,9 @@ int main() {
 		pyramidObject->render(*pyramidMesh, *simpleShader, camera);
 		pyramidObject2->render(*pyramidMesh, *simpleShader, camera);
 		cubeObject->render(*cubeMesh, *simpleShader, camera);
+
+		simpleWhiteShader->setActive();
+		cubeObject2->render(*cubeMesh, *simpleWhiteShader, camera);
 
 		// back buffer is drawn
 		// Swap front and back buffers
