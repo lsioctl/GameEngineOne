@@ -24,7 +24,10 @@ namespace shape {
         7, 3, 0,
         // front face
         3, 2, 6,
-        6, 7, 3
+        6, 7, 3,
+        // top
+        4, 5, 6,
+        6, 7, 4
     };
 
     const std::vector<GLfloat> Cube::vertices{
