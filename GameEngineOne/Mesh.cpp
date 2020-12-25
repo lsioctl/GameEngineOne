@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Mesh::Mesh() : mVAO{0}, mVBO{0}, mIBO{0}, mIndexCount{0} {
+Mesh::Mesh() : mVAO{ 0 }, mVBO{ 0 }, mIBO{ 0 }, mIndexCount{ 0 } {
 }
 
 // when array decay to pointer, sizeof(pointer) gives the size of the pointer, we lost sizeof(array)

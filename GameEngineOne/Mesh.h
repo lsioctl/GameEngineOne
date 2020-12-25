@@ -2,8 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <memory>
 #include <vector>
+
 #include <GL/glew.h>
 
 class Mesh {

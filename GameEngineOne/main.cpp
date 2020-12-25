@@ -11,6 +11,11 @@
 #include "Shader.h"
 #include "GameObject.h"
 #include "Camera.h"
+// instead of soil we use stb_image.h
+// from github nothings/stb
+#define STB_IMAGE_IMPLEMENTATION
+#include "Texture.h"
+
 
 using namespace std;
 
@@ -70,11 +75,23 @@ int main() {
 	auto simpleWhiteShader = make_unique<Shader>();
 	simpleWhiteShader->create("shaders/simpleWhite.vert", "shaders/simpleWhite.frag");
 
-	// auto cubeShader = make_unique<Shader>();
-	// cubeShader->create("shaders/simple.vert", "shaders/simple.frag");
+	auto simpleTextureShader = make_unique<Shader>();
+	simpleTextureShader->create("shaders/simpleTexture.vert", "shaders/simpleTexture.frag");
+
+
+	// this uses almost 30 MB of main memory
+	// see: 
+	// http://community.foundry.com/discuss/topic/56755/how-much-memory-does-a-texture-really-take?mode=Post&postID=510096
+	auto brickTexture = make_unique<Texture>("./textures/brick.png");
+	brickTexture->load();
+
+	// and this one only 3 MB ...
+	auto dirtTexture = make_unique<Texture>("./textures/dirt.png");
+	dirtTexture->load();
 
 	auto pyramidObject = make_unique<GameObject>();
 	auto pyramidObject2 = make_unique<GameObject>();
+	auto pyramidObject3 = make_unique<GameObject>();
 	auto cubeObject = make_unique<GameObject>();
 	auto cubeObject2 = make_unique<GameObject>();
 	
@@ -98,6 +115,8 @@ int main() {
 		pyramidObject->setScale(0.3f, 0.3f, 0.3f);
 		pyramidObject2->setTranslation(-3.0f, 0.0f, -3.0f);
 		pyramidObject2->setScale(0.3f, 0.3f, 0.3f);
+		pyramidObject3->setTranslation(-3.0f, 3.0f, -3.0f);
+		pyramidObject3->setScale(0.3f, 0.3f, 0.3f);
 		cubeObject->setTranslation(0.0f, 3.0f, -3.0f);
 		cubeObject2->setTranslation(3.0f, 3.0f, -3.0f);
 		cubeObject2->setScale(0.3f, 0.3f, 0.3f);
@@ -106,11 +125,17 @@ int main() {
 		simpleShader->setActive();
 
 		pyramidObject->render(*pyramidMesh, *simpleShader, camera);
-		pyramidObject2->render(*pyramidMesh, *simpleShader, camera);
 		cubeObject->render(*cubeMesh, *simpleShader, camera);
 
 		simpleWhiteShader->setActive();
 		cubeObject2->render(*cubeMesh, *simpleWhiteShader, camera);
+
+		brickTexture->use();
+		simpleTextureShader->setActive();
+		pyramidObject2->render(*pyramidMesh, *simpleTextureShader, camera);
+
+		dirtTexture->use();
+		pyramidObject3->render(*pyramidMesh, *simpleTextureShader, camera);
 
 		// back buffer is drawn
 		// Swap front and back buffers

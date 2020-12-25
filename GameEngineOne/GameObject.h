@@ -2,11 +2,12 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
 #include "Model.h"
 #include "Shader.h"
 #include "Mesh.h"
 #include "Camera.h"
-#include <memory>
+
 
 
 class GameObject {
